@@ -1,12 +1,3 @@
-// * A string value to store the underlying character for the letter
-
-// * A boolean value that stores whether that letter has been guessed yet
-
-// * A function that returns the underlying character if the letter has been guessed, or a placeholder (like an underscore) if the letter has not been guessed
-
-// * A function that takes a character as an argument and checks it against the underlying character, updating the stored boolean value to true if it was guessed correctly
-
-
 // Define a constructor function that can be used to create "letter" objects
 
 let Letter = function() {
@@ -18,9 +9,26 @@ let Letter = function() {
         if (this.guessed === true) {
             console.log("Already Guessed. Letter is: " + this.character);
 
+            this.character = character; 
 
+            return this.character;
+        }
+        else {
+            console.log("Already Guessed. Letter is: " + this.character);
+
+            this.character = "_"; 
+
+            return this.character;
         }
     };
+
+    // A function that takes a character as an argument and checks it against the underlying character
+    // Updates the stored boolean value to true if it was guessed correctly
+    this.checkLetter = function(guessCharacter) {
+        if (guessCharacter === this.character) {
+            this.guess = true; 
+        }
+    }; 
 };
 
 module.exports = Letter; 
