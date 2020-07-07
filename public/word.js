@@ -32,11 +32,37 @@ let Word = function (pokemonName) {
   };
 
   // A function that checks if any letters in the array match the user's guess and updates foundLetter
-  // A function that takes a character as an argument
-  // For each letter in the word, call the checkLetter function defined in letter.js
-  Word.prototype.callCheckLetter = function (guessedCharacter) {
-    for (var i = 0; i < this.letters.length; i++) {
-      Letter.checkLetter(guessedCharacter);
-    }
+  // A function that takes a guessedCharacter as an argument
+  Word.prototype.checkLetter = function (guessedCharacter) {
+      // Initiate and set a foundLetter variable to false
+      let foundLetter = false; 
+
+    // For each letter in the lettersArr, run an anon function
+    this.lettersArr.forEach(function(letter) {
+        // Check if any letters in lettersArr match the user's guess by running the checkGuess function on the guessedLetter from letter.js
+        if (letter.checkGuess(guessedCharacter)) {
+            // Set foundLetter to true
+            foundLetter = true;
+        }
+        
+        // Print the word guessed so far 
+        // Because we set the mthod for toString, JS will auto concatenate this even if we dont call toString
+        console.log("\n" + this + "\n");
+
+        // Return whether a letter has been found or not
+        return foundLetter;
+    });
+  };
+
+  // A function that returns true if all letters in the word have been guessed
+  Word.prototype.guessedCorrectly = function() {
+    // Using the array method .every, to loop over lettersArr to see if every letter's guessed status is true
+    // .every returns true if the callback func returns true for every element in the array it is looping over
+    return this.lettersArr.every(function(letter) {
+        return letter.guessed;
+    });
   };
 };
+
+
+module.exports = Word;
