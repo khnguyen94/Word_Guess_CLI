@@ -1,10 +1,8 @@
 // Import all dependencies
-const inquirer = require("inquirer");
-const Letter = require("./letter");
-const Word = require("./word");
+let Game = require("./public/game");
 
-// Create a new word object
-let word = new Word();
+// Initialize a new game object
+let game = new Game();
 
-// Prompt the user for a guess, must be a valid letter
-inquirer.prompt()
+// Start the game
+game.play();
