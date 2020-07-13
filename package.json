@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/khnguyen94/Word_Guess_CLI#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
     "inquirer": "^7.2.0"
   }
 }
