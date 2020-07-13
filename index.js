@@ -44,7 +44,7 @@ let Game = function () {
     // Set pokemonNameStr
     this.pokemonNameStr = randomPokemon;
 
-    console.log("Current Pokemon: " + this.pokemonNameStr + "\n");
+    // console.log("Current Pokemon: " + this.pokemonNameStr + "\n");
 
     // Create a new Word object with randomPokemon, assign it to currentPokemon
     this.currentPokemon = new Word(randomPokemon);
@@ -52,6 +52,12 @@ let Game = function () {
 
   // A function to prompt the user for a guess
   this.promptGuess = function () {
+    // Create a displayCurrentStr variable to hold and display current word string returned from running guessWord
+    let displayCurrentStr = self.currentPokemon.displayWord();
+
+    // Display it
+    console.log("Current Pokemon: " + displayCurrentStr + "\n");
+
     // Use inquirer
     inquirer
       .prompt([
@@ -65,20 +71,41 @@ let Game = function () {
         // Run the guessWord function on the val.choice
         self.currentPokemon.guessWord(val.choice);
 
-        // Create a displayCurrentStr variable to hold and display current word string returned from running guessWord 
-        let displayCurrentStr = self.currentPokemon.displayWord();
+        // console.log("Found Letter: " + self.currentPokemon.foundLetter);
 
-        // Display it
-        console.log(displayCurrentStr);
+        // If a guessedLetter has been found in lettersArr
+        if (self.currentPokemon.foundLetter) {
+          // And if the current stringed word is equal to the pokemon name, then console.log a completed Pokemon guess message
 
-        console.log(self.currentPokemon.foundLetter);
+          if (self.pokemonNameStr === self.currentPokemon.lettersArrStr) {
+            console.log("You guessed the Pokemon! It's: " + self.pokemonNameStr);
+            self.startGame();
+          } else {
+            console.log("Correct Guess!");
+            self.promptGuess();
+          }
+        }
+        // Else, this means that the user has guessed a wrong letter
+        else {
+          // Decrement guessesLeft by 1
+          self.guessesLeft--;
 
-        // Check if the 
-        // If the user has guessed all the letters of the Pokemon's name correctly, then display congrats message
-       
+          // If guessesLeft is 0
+          if (self.guessesLeft === 0) {
+            // Display fail message for that pokemon for the user
+            console.log("You ran out of guesses! Try guess this next Pokemon!");
+
+            // Run startGame
+            self.startGame();
+          }
+          // This means that the user had a wrong guess but they still have guesses remaining
+          else {
+            // Display incorrect guess message
+            console.log("Incorrect Guess!");
+            self.promptGuess();
+          }
+        }
       });
-
-
   };
 };
 

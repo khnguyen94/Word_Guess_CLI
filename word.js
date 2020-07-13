@@ -7,6 +7,8 @@ let Word = function (pokemonName) {
   // this.letters will be an empty array to hold all of the letters for this word
   this.lettersArr = [];
 
+  this.lettersArrCopy = [];
+
   // this.lettersArrStr will be the string that holds the concatenated string from lettersArr
   this.lettersArrStr = "";
 
@@ -21,7 +23,13 @@ let Word = function (pokemonName) {
     return new Letter(letter);
   });
 
-  console.log("Letters Array: " + this.lettersArr);
+  this.lettersArrCopy = this.lettersArr.map(function(letter) {
+    return letter.letter
+  });
+
+  // console.log(this.lettersArrCopy);
+
+  // console.log("Letters Array: " + this.lettersArr + "\n");
 
   // A function that displays the current lettersArr as a string
   this.displayWord = function () {
@@ -32,14 +40,17 @@ let Word = function (pokemonName) {
   this.guessWord = function (guessedLetter) {
     // For each letter in the lettersArr, run an anon function that runs the Letter.checkGuess function on guessedLetter
     // for each letter in lettersArr, checkGuess sets each letter's isGuessed property to either true or false and depending on that condition, displays 1) the letter or space or 2) an underscore
+
+    console.log("Guessed Letter: " + guessedLetter);
+
     this.lettersArr.forEach(function (letter) {
+      // Run checkGuess function for each letter object, pass in guessedLetter 
       letter.checkGuess(guessedLetter);
     });
 
-    // If guessedLetter is one of the letters within lettersArr, set foundLetter to true
-    if (this.lettersArr.includes(guessedLetter)) {
-      this.foundLetter = true;
-    }
+    this.foundLetter = this.lettersArrCopy.includes(guessedLetter);
+
+    console.log("Letters Array: " + this.lettersArr + "\n");
 
     // Set lettersArrStr to a string formed from lettersArr
     this.lettersArrStr = this.lettersArr.join("");
